@@ -1,0 +1,18 @@
+type JwtToken {
+  token: String!
+  expiresIn: Int!
+}
+
+type LoginErrors {
+  phone: String
+  password: String
+}
+
+type LoginResponse {
+  token: JwtToken
+  errors: LoginErrors
+}
+
+type Query {
+  login (phone: String!, password: String!) : LoginResponse!
+}

@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "typecheck": "lerna run typecheck",
+    "lint": "lerna run lint"
+  },
+  "devDependencies": {
+    "lerna": "^3.4.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
