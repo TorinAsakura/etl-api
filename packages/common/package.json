@@ -1,0 +1,23 @@
+{
+  "name": "@er/common",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "typecheck": "tsc",
+    "lint": "tslint --project tsconfig.json -c tslint.json -t codeFrame src/**/*.ts{,x}"
+  },
+  "dependencies": {
+    "@nestjs/common": "^5.2.2",
+    "class-transformer": "^0.1.9",
+    "locale": "^0.1.0",
+    "password-validator": "^4.1.1",
+    "rxjs": "^6.1.0",
+    "rxjs-compat": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.9.3",
+    "tslint": "^5.9.1",
+    "typescript": "^3.0.3"
+  }
+}
