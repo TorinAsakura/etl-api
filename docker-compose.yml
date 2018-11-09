@@ -1,0 +1,96 @@
+version: "3"
+
+services:
+  yarn:
+    image: node
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+    entrypoint: yarn
+
+  db:
+    image: postgres:10
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=er
+
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+      driver: none
+    ports:
+      - 8025:8025
+
+  sqs:
+    image: s12v/elasticmq
+    volumes:
+      - ./config/elasticmq:/etc/elasticmq
+
+  s3:
+    image: minio/minio
+    ports:
+      - 9000:9000
+    volumes:
+      - ./.data:/data
+    environment:
+      - MINIO_ACCESS_KEY=accessKey
+      - MINIO_SECRET_KEY=secretKey
+    command: server data
+
+  mailer:
+    image: node
+    working_dir: /workspace/packages/mailer
+    volumes:
+      - ./:/workspace
+    environment:
+      - ASSETS_URL=https://stage.avisits.com
+      - QUEUE_URL=http://sqs:9324/queue/mailer
+      - QUEUE_KEY=test
+      - QUEUE_SECRET=test
+      - QUEUE_REGION=us-east-1
+    entrypoint: yarn run dev
+    depends_on:
+      - mailhog
+      - sqs
+
+  smser:
+    image: node
+    working_dir: /workspace/packages/smser
+    volumes:
+      - ./:/workspace
+    environment:
+      - QUEUE_URL=http://sqs:9324/queue/smser
+      - QUEUE_KEY=test
+      - QUEUE_SECRET=test
+      - QUEUE_REGION=us-east-1
+    entrypoint: yarn run dev
+    depends_on:
+      - sqs
+
+  swt-gateway:
+    image: node
+    working_dir: /workspace/packages/crm-gateway
+    volumes:
+      - ./:/workspace
+    entrypoint: yarn run dev
+    ports:
+      - "3000:3000"
+    environment:
+      - MAILER_QUEUE_URL=http://sqs:9324/queue/mailer
+      - MAILER_QUEUE_KEY=test
+      - MAILER_QUEUE_SECRET=test
+      - SMSER_QUEUE_URL=http://sqs:9324/queue/smser
+      - SMSER_QUEUE_KEY=test
+      - SMSER_QUEUE_SECRET=test
+      - FILES_REGION=us-east-1
+      - FILES_ENDPOINT=http://s3:9000
+      - FILES_ACCESS_KEY=accessKey
+      - FILES_SECRET_KEY=secretKey
+      - FILES_BUCKET=dev
+    depends_on:
+      - db
+      - s3
+      - sqs
+      - smser
+      - mailer
