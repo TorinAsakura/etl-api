@@ -44,7 +44,7 @@ services:
     volumes:
       - ./:/workspace
     environment:
-      - ASSETS_URL=https://stage.avisits.com
+      - ASSETS_URL=https://stage.etelaranta.com
       - QUEUE_URL=http://sqs:9324/queue/mailer
       - QUEUE_KEY=test
       - QUEUE_SECRET=test
@@ -70,7 +70,7 @@ services:
 
   swt-gateway:
     image: node
-    working_dir: /workspace/packages/crm-gateway
+    working_dir: /workspace/packages/swt-gateway
     volumes:
       - ./:/workspace
     entrypoint: yarn run dev
