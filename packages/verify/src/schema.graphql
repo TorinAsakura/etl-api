@@ -1,0 +1,16 @@
+input ConfirmVerificationCodeInput {
+  verificationId: String!
+  verificationCode: String!
+}
+
+type ConfirmVerificationCodeErrors {
+  verificationCode: String
+}
+
+type ConfirmVerificationCodeResponse {
+  errors: ConfirmVerificationCodeErrors
+}
+
+type Mutation {
+  confirmVerificationCode (input: ConfirmVerificationCodeInput!) : ConfirmVerificationCodeResponse!
+}
