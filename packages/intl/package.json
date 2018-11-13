@@ -1,0 +1,19 @@
+{
+  "name": "@er/intl",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "typecheck": "tsc",
+    "lint": "tslint --project tsconfig.json -c tslint.json -t codeFrame src/**/*.ts{,x}"
+  },
+  "dependencies": {
+    "glob-promise": "^3.4.0",
+    "intl-messageformat": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.9.3",
+    "tslint": "^5.9.1",
+    "typescript": "^3.0.3"
+  }
+}
