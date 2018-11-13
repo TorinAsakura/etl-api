@@ -10,6 +10,7 @@
   "dependencies": {
     "@nestjs/common": "^5.2.2",
     "class-transformer": "^0.1.9",
+    "class-validator": "^0.9.1",
     "locale": "^0.1.0",
     "password-validator": "^4.1.1",
     "rxjs": "^6.1.0",
