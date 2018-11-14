@@ -1,0 +1,30 @@
+{
+  "name": "@er/account",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "typecheck": "tsc --target es2015 --module es2015 --moduleResolution node",
+    "lint": "tslint --project tsconfig.json -c tslint.json -t codeFrame src/**/*.ts{,x}",
+    "locales:extract": "intl-tools intl:extract -m \"@av/intl\" ./dist",
+    "locales:upload": "intl-tools lokalise:upload -p 643237235b4563647d7004.50758493"
+  },
+  "dependencies": {
+    "@nestjs/common": "^5.2.2",
+    "@nestjs/core": "^5.2.2",
+    "@nestjs/cqrs": "^5.1.1",
+    "@nestjs/graphql": "^3.0.0",
+    "@nestjs/typeorm": "^5.2.0",
+    "@types/bcryptjs": "^2.4.2",
+    "bcryptjs": "^2.4.3",
+    "typeorm": "^0.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "^10.9.3",
+    "intl-tools": "^0.1.12",
+    "nodemon": "^1.18.4",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.9.1",
+    "typescript": "^3.0.3"
+  }
+}

@@ -50,6 +50,7 @@ dist/
 
 # IDE cache directory
 .c9
+.idea
 
 # Minio data folder
 .data
