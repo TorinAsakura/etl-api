@@ -1,21 +1,20 @@
-import { ICommandHandler, CommandHandler, EventPublisher } from '@er/cqrs'
-import { CreateUserCommand } from '../impl'
+import { EventPublisher, ICommandHandler, CommandHandler } from '@nestjs/cqrs'
+import { CreateAccountCommand } from '../impl'
+import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
 import { User } from '@er/users'
-import { Repository } from 'typeorm'
 import * as bcrypt from 'bcryptjs'
-import { UserCreatedEvent } from '../../events/impl'
+import { UserCreatedEvent } from '@er/users/src/events/impl'
 
-@CommandHandler(CreateUserCommand)
-export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
+@CommandHandler(CreateAccountCommand)
+export class CreateAccountHandler implements ICommandHandler<CreateAccountCommand> {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-
     private readonly publisher: EventPublisher,
   ) {}
 
-  async execute(command: CreateUserCommand) {
+  async execute(command: CreateAccountCommand) {
     const salt = await bcrypt.genSalt(10)
     const password = await bcrypt.hash(command.password, salt)
 
