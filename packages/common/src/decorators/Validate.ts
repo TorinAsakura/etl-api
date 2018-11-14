@@ -1,4 +1,4 @@
-import { Validator, ValidatorOptions } from 'class-validator'
+import { validate, ValidatorOptions } from 'class-validator'
 import { plainToClass } from 'class-transformer'
 
 const mapErrors = (result, error) => {
@@ -37,9 +37,8 @@ export function Validate(metatype, options?: ValidationOptions): any {
         const values = targetField ? params[targetField] : params
 
         const object = plainToClass(metatype, { ...values, user: context.user })
-        const validator = new Validator()
 
-        const errors = await validator.validate(object, validatorOptions)
+        const errors = await validate(object, validatorOptions)
 
         if (errors && errors.length > 0) {
           return { errors: errors.reduce(mapErrors, {}) }

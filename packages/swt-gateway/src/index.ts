@@ -8,7 +8,7 @@ async function bootstrap() {
 
   app.enableCors()
 
-  useContainer(app, { fallback: true })
+  useContainer(app, { fallbackOnErrors: true, fallback: true })
 
   app.useGlobalInterceptors(new MapErrorCodes())
 

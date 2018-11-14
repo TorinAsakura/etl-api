@@ -8,9 +8,8 @@
     "start": "node -r ts-node/register src/index.ts",
     "typecheck": "tsc --target es2015 --module es2015 --moduleResolution node",
     "lint": "tslint --project tsconfig.json -c tslint.json -t codeFrame src/**/*.ts{,x}",
-    "locales:download": "intl-tools lokalise:download -p 643237235b4563647d7004.50758493 -t f110be4308044a0bd50b35c0bdb508c3c83a9f24 -o $PWD/locales",
-    "locales:extract": "intl-tools intl:extract -m \"@er/intl\" ./dist",
-    "locales:upload": "intl-tools lokalise:upload -p 293284795b62a7623cba23.59882259"
+    "locales:download": "intl-tools lokalise:download -o $PWD/locales",
+    "locales:extract": "intl-tools intl:extract -m \"@er/intl\" ./dist"
   },
   "devDependencies": {
     "@types/node": "^10.9.3",

@@ -6,8 +6,7 @@
   "scripts": {
     "typecheck": "tsc --target es2015 --module es2015 --moduleResolution node",
     "lint": "tslint --project tsconfig.json -c tslint.json -t codeFrame src/**/*.ts{,x}",
-    "locales:extract": "intl-tools intl:extract -m \"@av/intl\" ./dist",
-    "locales:upload": "intl-tools lokalise:upload -p 643237235b4563647d7004.50758493"
+    "locales:extract": "intl-tools intl:extract -m \"@er/intl\" ./dist"
   },
   "dependencies": {
     "@nestjs/common": "^5.2.2",
@@ -16,6 +15,7 @@
     "@nestjs/graphql": "^3.0.0",
     "@nestjs/typeorm": "^5.2.0",
     "@types/bcryptjs": "^2.4.2",
+
     "bcryptjs": "^2.4.3",
     "typeorm": "^0.2.7"
   },
