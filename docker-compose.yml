@@ -38,6 +38,16 @@ services:
       - MINIO_SECRET_KEY=secretKey
     command: server data
 
+  pgweb:
+    image: sosedoff/pgweb
+    ports:
+    - 8081:8081
+    environment:
+    - DATABASE_URL=postgres://root:root@db:5432/av?sslmode=disable
+    - AUTH_USER=user
+    - AUTH_PASS=password
+    depends_on:
+
   mailer:
     image: node
     working_dir: /workspace/packages/mailer

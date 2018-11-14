@@ -4,9 +4,10 @@
   "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec node -r ts-node/register --watch ../users/src --watch ../auth/src --watch ../verify/src --watch src src/index.ts",
+    "dev": "nodemon --exec node --inspect=0.0.0.0:9222 --nolazy -r ts-node/register --watch ../users/src --watch ../auth/src --watch ../verify/src --watch src src/index.ts",
     "typecheck": "tsc --target es2015 --module es2015 --moduleResolution node",
-    "lint": "tslint --project tsconfig.json -c tslint.json -t codeFrame src/**/*.ts{,x}"
+    "lint": "tslint --project tsconfig.json -c tslint.json -t codeFrame src/**/*.ts{,x}",
+    "locales:download": "intl-tools lokalise:download -p 643237235b4563647d7004.50758493 -t f110be4308044a0bd50b35c0bdb508c3c83a9f24 -o $PWD/locales"
   },
   "dependencies": {
     "@nestjs/common": "^5.2.2",

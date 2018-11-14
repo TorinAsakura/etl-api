@@ -3,27 +3,3 @@ type User {
   login: String
   email: String
 }
-
-input CreateUserInput {
-  login: String
-  email: String
-  password: String
-}
-
-type CreateUserErrors {
-  email: String
-  login: String
-  password: String
-}
-
-type CreateUserResponse {
-  errors: CreateUserErrors
-}
-
-type Query {
-  all : [User]
-}
-
-type Mutation {
-  createUser (input: CreateUserInput!) : CreateUserResponse
-}

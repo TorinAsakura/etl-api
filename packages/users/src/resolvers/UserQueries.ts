@@ -10,9 +10,4 @@ export class UserQueries {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) {}
-
-  @Query()
-  all(request) {
-    return this.userRepository.find()
-  }
 }

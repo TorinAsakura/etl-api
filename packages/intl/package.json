@@ -4,8 +4,9 @@
   "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "typecheck": "tsc",
-    "lint": "tslint --project tsconfig.json -c tslint.json -t codeFrame src/**/*.ts{,x}"
+    "typecheck": "tsc --target es2015 --module es2015 --moduleResolution node",
+    "lint": "tslint --project tsconfig.json -c tslint.json -t codeFrame src/**/*.ts{,x}",
+    "locales:extract": "intl-tools intl:extract -m \"@er/intl\" ./dist"
   },
   "dependencies": {
     "glob-promise": "^3.4.0",

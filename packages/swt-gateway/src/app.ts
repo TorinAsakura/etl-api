@@ -9,6 +9,7 @@ import { graphqlExpress } from 'apollo-server-express'
 import graphqlPlayground from 'graphql-playground-middleware-express'
 import { AuthModule, AuthMiddleware } from '@er/auth'
 import { VerifyModule } from '@er/verify'
+import { LocaleMiddleware } from '@er/common'
 
 @Module({
   imports: [
@@ -55,6 +56,9 @@ export class ApplicationModule implements NestModule {
 
     consumer
       .apply(this.authMiddleware.resolve())
+        .forRoutes('/graphql')
+      .apply(LocaleMiddleware)
+        .with(['ru', 'en'])
         .forRoutes('/graphql')
       .apply(graphqlExpress(request => ({ schema, context: { user: request.user }, rootValue: request })))
         .forRoutes('/graphql')
