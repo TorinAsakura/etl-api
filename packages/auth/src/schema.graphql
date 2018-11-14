@@ -4,7 +4,7 @@ type JwtToken {
 }
 
 type LoginErrors {
-  phone: String
+  email: String
   password: String
 }
 
@@ -14,5 +14,5 @@ type LoginResponse {
 }
 
 type Query {
-  login (phone: String!, password: String!) : LoginResponse!
+  login (email: String!, password: String!) : LoginResponse!
 }
