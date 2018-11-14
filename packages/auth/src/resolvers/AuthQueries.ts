@@ -13,9 +13,9 @@ export class AuthQueries {
 
   @Query()
   @MapParams(LoginDto)
-  login(request, { phone, password }) {
+  login(request, { email, password }) {
     return this.commandBus.execute(
-      new GenerateTokenCommand(phone, password),
+      new GenerateTokenCommand(email, password),
     )
   }
 }

@@ -38,13 +38,24 @@ services:
       - MINIO_SECRET_KEY=secretKey
     command: server data
 
+  pgweb:
+    image: sosedoff/pgweb
+    ports:
+      - 8081:8081
+    environment:
+      - DATABASE_URL=postgres://root:root@db:5432/av?sslmode=disable
+      - AUTH_USER=user
+      - AUTH_PASS=password
+    depends_on:
+      - db
+
   mailer:
     image: node
     working_dir: /workspace/packages/mailer
     volumes:
       - ./:/workspace
     environment:
-      - ASSETS_URL=https://stage.avisits.com
+      - ASSETS_URL=https://stage.etelaranta.com
       - QUEUE_URL=http://sqs:9324/queue/mailer
       - QUEUE_KEY=test
       - QUEUE_SECRET=test
@@ -70,7 +81,7 @@ services:
 
   swt-gateway:
     image: node
-    working_dir: /workspace/packages/crm-gateway
+    working_dir: /workspace/packages/swt-gateway
     volumes:
       - ./:/workspace
     entrypoint: yarn run dev
