@@ -19,13 +19,13 @@ export class GenerateTokenHandler implements ICommandHandler<GenerateTokenComman
   async execute(command: GenerateTokenCommand) {
     const user = await this.userRepository
      .createQueryBuilder('user')
-     .where('LOWER(phone) = LOWER(:phone)', { phone: command.phone })
+     .where('LOWER(email) = LOWER(:email)', { email: command.email })
      .getOne()
 
     if (!user) {
       return {
         errors: {
-          phone: messages.phoneNotFound,
+          email: messages.invalidEmailOrPassword,
         },
       }
     }
@@ -34,6 +34,14 @@ export class GenerateTokenHandler implements ICommandHandler<GenerateTokenComman
       return {
         errors: {
           password: messages.invalidPassword,
+        },
+      }
+    }
+
+    if (!user.isVerified) {
+      return {
+        errors: {
+          email: 'Not verified',
         },
       }
     }
