@@ -1,0 +1,12 @@
+pipeline:
+  ssh:
+    image: appleboy/drone-ssh
+    host: stage.api.etelaranta.net
+    username: root
+    port: 22
+    secrets: [ssh_key]
+    script:
+      - ./deploy.sh
+    when:
+      branch: ["dev"]
+      event: [push]
