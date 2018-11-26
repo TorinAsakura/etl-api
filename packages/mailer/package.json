@@ -23,12 +23,14 @@
   },
   "dependencies": {
     "@nestjs/microservices": "^5.2.2",
+    "@types/nodemailer-mailgun-transport": "^1.3.3",
     "aws-sdk": "^2.305.0",
     "edge.js": "^1.1.4",
     "fs-extra-promise": "^1.0.1",
     "glob-promise": "^3.4.0",
     "mjml": "^4.2.0",
     "nodemailer": "^4.6.8",
+    "nodemailer-mailgun-transport": "^1.4.0",
     "sqs-consumer": "^3.8.0",
     "sqs-producer": "^1.6.2"
   }

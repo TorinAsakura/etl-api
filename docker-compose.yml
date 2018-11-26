@@ -50,7 +50,7 @@ services:
       - QUEUE_SECRET=test
       - QUEUE_REGION=us-east-1
       - NODE_ENV=production
-      - SENDER=etelaranta.net@yandex.ru
+      - SENDER=noreply@etelaranta.net
       - SMTP_USER=etelaranta.net@yandex.ru
       - SMTP_PASSWORD=WRytzyedRk3RTRReFKtHiFoHUuqa3LygfuFLHfY4KiK4ntpfktCVvC
       - SMTP_URI=smtp.yandex.ru

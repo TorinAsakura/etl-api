@@ -8,7 +8,7 @@
             Код подтверждения: <span style="font-weight: 500">{{ verificationCode }}</span>
             VerificationID: <span style="font-weight: 500">{{ verificationId }}</span>
           </span>
-          <a href="htttps://stage.eteleranta.net/auth/registration/confirm/{{ verificationId }}/{{ verificationCode }}">Confirm registration</a>
+          <a href="https://stage.etelaranta.net/auth/registration/confirm/{{ verificationId }}/{{ verificationCode }}">Confirm registration</a>
         </mj-text>
       </mj-column>
       <mj-column width="20px"></mj-column>
