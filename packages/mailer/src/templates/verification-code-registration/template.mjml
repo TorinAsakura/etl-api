@@ -1,0 +1,18 @@
+<mjml>
+  <mj-body background-color="#ffffff">
+    <mj-section background-color="#fff" padding="0 0 32px" css-class="shadow" border-radius="0 0 3px 3px">
+      <mj-column width="20px"></mj-column>
+      <mj-column width="300px">
+        <mj-text padding="2px 26px 2px 26px" align="center" font-size="16px" font-weight="normal" line-height="24px">
+          <span class="credential">
+            Код подтверждения: <span style="font-weight: 500">{{ verificationCode }}</span>
+            VerificationID: <span style="font-weight: 500">{{ verificationId }}</span>
+          </span>
+          <a href="htttps://stage.eteleranta.net/auth/registration/confirm/{{ verificationId }}/{{ verificationCode }}">Confirm registration</a>
+        </mj-text>
+      </mj-column>
+      <mj-column width="20px"></mj-column>
+    </mj-section>
+  </mj-body>
+
+</mjml>

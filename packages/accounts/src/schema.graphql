@@ -1,0 +1,82 @@
+input CreateAccountInput {
+  login: String!
+  email: String!
+  password: String!
+  confirmPassword: String!
+}
+
+input CreateAccountVerifyInput {
+  verificationId: String!
+  code: String!
+}
+
+input VerifyInput {
+  verificationId: String!
+  code: String!
+}
+
+type VerifyErrors {
+  verificationId: String
+  code: String
+}
+
+type CreateAccountErrors {
+  login: String
+  email: String
+  password: String
+}
+
+type CreateAccountVerifyErrors {
+  verificationId: String
+  code: String
+}
+
+type CreateAccountResponse {
+  result: Account
+  errors: CreateAccountErrors
+}
+
+type CreateAccountVerifyResponse {
+  token: JwtToken
+  errors: CreateAccountVerifyErrors
+}
+
+type RoleRef {
+  id: ID!
+  name: String!
+}
+
+type UserRef {
+  id: ID!
+  login: String!
+  email: String!
+  verifyMethod: String!
+}
+
+type Account {
+  id: ID!
+  role: RoleRef
+  user: UserRef
+}
+
+type Enable2faResponse {
+  totpUri: String!
+  verificationId: String!
+  secret: String!
+}
+
+type Enable2faVerifyResponse {
+  result: String
+  errors: VerifyErrors
+}
+
+type Mutation {
+  createAccount (input: CreateAccountInput!) : CreateAccountResponse!
+  createAccountVerify (input: CreateAccountVerifyInput!) : CreateAccountVerifyResponse!
+  enable2fa : Enable2faResponse!
+  enable2faVerify (input: VerifyInput!) : Enable2faVerifyResponse!
+}
+
+type Query {
+  me : Account!
+}
