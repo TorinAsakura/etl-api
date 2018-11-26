@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { Query } from '@nestjs/graphql'
-import { InjectRepository } from '@nestjs/typeorm'
-import { User } from '../entities'
-import { Repository } from 'typeorm'
+import { AuthAccess } from '@er/common'
 
 @Injectable()
 export class UserQueries {
-  constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-  ) {}
+  @Query()
+  @AuthAccess()
+  me(request) {
+    return Promise.resolve(request.user)
+  }
 }

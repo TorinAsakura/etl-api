@@ -1,2 +1,5 @@
 export * from './CreateEmailVerificationCodeCommand'
 export * from './ConfirmVerificationCodeCommand'
+export * from './Enable2faCommand'
+export * from './InitiateVerifyCommand'
+export * from './VerifyCommand'

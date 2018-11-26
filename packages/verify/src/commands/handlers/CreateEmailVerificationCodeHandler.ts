@@ -1,22 +1,19 @@
-import { EventPublisher, ICommandHandler, CommandHandler } from '@nestjs/cqrs'
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { v4 as uuid } from 'uuid'
 import { User } from '@er/users'
-import { EmailVerificationCodeCreatedEvent } from '../../events/impl'
 import { CreateEmailVerificationCodeCommand } from '../impl'
-import { Verification } from '../../entities'
-import { generatePassword } from '@er/common'
+import { VerificationServiceFactory } from '../../service'
+import { VerificationMethod } from '../../enums'
+import { VerificationParams } from '../../service/abstracts'
 
 @CommandHandler(CreateEmailVerificationCodeCommand)
 export class CreateEmailVerificationCodeHandler implements ICommandHandler<CreateEmailVerificationCodeCommand> {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    @InjectRepository(Verification)
-    private readonly verificationRepository: Repository<Verification>,
 
-    private readonly publisher: EventPublisher,
+    private readonly verificationServiceFactory: VerificationServiceFactory,
   ) {}
 
   async execute(command: CreateEmailVerificationCodeCommand) {
@@ -25,24 +22,14 @@ export class CreateEmailVerificationCodeHandler implements ICommandHandler<Creat
       select: [ 'id', 'email' ],
     })
 
-    const verification = this.publisher.mergeObjectContext(
-      await this.verificationRepository.save(
-        this.verificationRepository.create({
-          user,
-          verificationId: [uuid(), uuid()].join('').replace(/-/g, ''),
-          verificationCode: generatePassword(6),
-        }),
-      ),
-    )
+    const verificationService = this.verificationServiceFactory.create(VerificationMethod.Email)
+    const verificationParams: VerificationParams = {
+      consumer: user.email,
+    }
+    const verification = await verificationService.initiate(verificationParams)
 
-    verification.apply(new EmailVerificationCodeCreatedEvent(
-      verification.user.email,
-      verification.verificationId,
-      verification.verificationCode,
-    ))
-
-    verification.commit()
-
-    return {}
+    return {
+      verificationId: verification.verificationId,
+    }
   }
 }

@@ -1,31 +1,16 @@
-import { ICommandHandler, CommandHandler } from '@er/cqrs'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { CommandHandler, ICommandHandler } from '@er/cqrs'
 import { ConfirmVerificationCodeCommand } from '../impl'
-import { User } from '@er/users'
-import { Verification } from '../../entities'
+import { VerificationServiceFactory } from '../../service'
+import { VerificationMethod } from '../../enums'
 
 @CommandHandler(ConfirmVerificationCodeCommand)
 export class ConfirmVerificationCodeHandler implements ICommandHandler<ConfirmVerificationCodeCommand> {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-    @InjectRepository(Verification)
-    private readonly verificationRepository: Repository<Verification>,
+    private readonly verificationServiceFactory: VerificationServiceFactory,
   ) {}
 
   async execute(command: ConfirmVerificationCodeCommand) {
-    const verification = await this.verificationRepository.findOne({
-      where: {
-        verificationId: command.verificationId,
-        verificationCode: command.verificationCode,
-      },
-      relations: ['user'],
-    })
-
-    verification.user.isVerified = true
-    await this.userRepository.save(verification.user)
-
-    return {}
+    const verificationService = this.verificationServiceFactory.create(VerificationMethod.Email)
+    return verificationService.validate(command.verificationId, command.verificationCode)
   }
 }

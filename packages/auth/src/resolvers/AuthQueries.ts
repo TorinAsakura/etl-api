@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common'
 import { Query } from '@nestjs/graphql'
 import { CommandBus } from '@er/cqrs'
 import { MapParams } from '@er/common'
-import { GenerateTokenCommand } from '../commands/impl'
+import { SigninCommand, VerifyAndGenerateTokenCommand } from '../commands/impl'
 import { LoginDto } from '../dto'
+import { VerifyDto } from '@er/verify/src/dto'
 
 @Injectable()
 export class AuthQueries {
@@ -13,9 +14,17 @@ export class AuthQueries {
 
   @Query()
   @MapParams(LoginDto)
-  login(request, { email, password }) {
+  signin(request, { email, password }) {
     return this.commandBus.execute(
-      new GenerateTokenCommand(email, password),
+      new SigninCommand(email, password),
+    )
+  }
+
+  @Query()
+  @MapParams(VerifyDto)
+  signinVerify(request, { verificationId, code }) {
+    return this.commandBus.execute(
+      new VerifyAndGenerateTokenCommand(verificationId, code),
     )
   }
 }

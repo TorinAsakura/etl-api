@@ -3,13 +3,15 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { CoreModule } from './core'
 import { GraphQLModule, GraphQLFactory } from '@nestjs/graphql'
 import { UsersModule } from '@er/users'
-import { AccountModule } from '@er/account'
 import { GraphQLDate, GraphQLTime, GraphQLDateTime } from 'graphql-iso-date'
 import { graphqlExpress } from 'apollo-server-express'
 import graphqlPlayground from 'graphql-playground-middleware-express'
 import { AuthModule, AuthMiddleware } from '@er/auth'
 import { VerifyModule } from '@er/verify'
-import { LocaleMiddleware } from '@er/common'
+import { LocaleMiddleware, AccessGuard } from '@er/common'
+import { APP_GUARD } from '@nestjs/core'
+import { RolesModule } from '@er/roles'
+import { AccountsModule } from '@er/accounts'
 
 @Module({
   imports: [
@@ -31,12 +33,18 @@ import { LocaleMiddleware } from '@er/common'
     }),
     CoreModule,
     GraphQLModule,
+    RolesModule,
     AuthModule,
-    AccountModule,
-    UsersModule,
     VerifyModule,
+    UsersModule,
+    AccountsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AccessGuard,
+    },
+  ],
 })
 export class ApplicationModule implements NestModule {
   constructor(
