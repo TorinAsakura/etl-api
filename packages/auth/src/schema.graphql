@@ -13,6 +13,29 @@ type LoginResponse {
   errors: LoginErrors
 }
 
+type SigninErrors {
+  email: String
+  password: String
+}
+
+type SigninResponse {
+  token: JwtToken
+  verificationId: String
+  verifyMethod: String
+  errors: SigninErrors
+}
+
+type SigninVerifyErrors {
+  verificationId: String
+  code: String
+}
+
+type SigninVerifyResponse {
+  token: JwtToken
+  errors: SigninVerifyErrors
+}
+
 type Query {
-  login (email: String!, password: String!) : LoginResponse!
+  signin (email: String!, password: String!) : SigninResponse!
+  signinVerify (verificationId: String!, code: String!) : SigninVerifyResponse!
 }

@@ -1,4 +1,10 @@
-import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity } from 'typeorm'
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Entity,
+} from 'typeorm'
 import { AggregateRoot } from '@er/cqrs'
 
 @Entity()
@@ -6,10 +12,10 @@ export class User extends AggregateRoot {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
+  @Column({ unique: true })
   login: string
 
-  @Column()
+  @Column({ unique: true })
   email: string
 
   @Column()
@@ -19,6 +25,9 @@ export class User extends AggregateRoot {
     default: false,
   })
   isVerified: boolean
+
+  @Column({ default: 'email' })
+  verifyMethod: string
 
   @CreateDateColumn()
   createdAt: Date

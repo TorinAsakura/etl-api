@@ -38,28 +38,22 @@ services:
       - MINIO_SECRET_KEY=secretKey
     command: server data
 
-  pgweb:
-    image: sosedoff/pgweb
-    ports:
-      - 8081:8081
-    environment:
-      - DATABASE_URL=postgres://root:root@db:5432/av?sslmode=disable
-      - AUTH_USER=user
-      - AUTH_PASS=password
-    depends_on:
-      - db
-
   mailer:
     image: node
     working_dir: /workspace/packages/mailer
     volumes:
       - ./:/workspace
     environment:
-      - ASSETS_URL=https://stage.etelaranta.com
+      - ASSETS_URL=https://stage.etelaranta.net
       - QUEUE_URL=http://sqs:9324/queue/mailer
       - QUEUE_KEY=test
       - QUEUE_SECRET=test
       - QUEUE_REGION=us-east-1
+      - NODE_ENV=production
+      - SENDER=etelaranta.net@yandex.ru
+      - SMTP_USER=etelaranta.net@yandex.ru
+      - SMTP_PASSWORD=WRytzyedRk3RTRReFKtHiFoHUuqa3LygfuFLHfY4KiK4ntpfktCVvC
+      - SMTP_URI=smtp.yandex.ru
     entrypoint: yarn run dev
     depends_on:
       - mailhog
@@ -87,6 +81,7 @@ services:
     entrypoint: yarn run dev
     ports:
       - "3000:3000"
+      - "9222:9222"
     environment:
       - MAILER_QUEUE_URL=http://sqs:9324/queue/mailer
       - MAILER_QUEUE_KEY=test

@@ -1,5 +1,80 @@
 type User {
-  id: Int
-  login: String
-  email: String
+  id: ID!
+  login: String!
+  email: String!
+}
+
+# Inputs
+input InitiateResetPasswordInput {
+  email: String!
+}
+
+input VerifyUpdatePassword {
+  verificationId: String!
+  code: String!
+  current: String!
+  value: String!
+  confirmation: String!
+}
+
+input VerifyResetPassword {
+  verificationId: String!
+  code: String!
+  value: String!
+  confirmation: String!
+}
+
+# Errors
+type InitiateUpdatePasswordErrors {
+  error: String!
+}
+
+type InitiateResetPasswordErrors {
+  email: String!
+}
+
+type UpdatePasswordErrors {
+  verificationId: String
+  code: String
+  current: String
+  value: String
+  confirmation: String
+}
+
+type ResetPasswordErrors {
+  verificationId: String
+  code: String
+  value: String
+  confirmation: String
+}
+
+# Responses
+type InitiateUpdatePasswordResponse {
+  verificationId: String
+  errors: InitiateUpdatePasswordErrors
+}
+
+type InitiateResetPasswordResponse {
+  verificationId: String
+  errors: InitiateResetPasswordErrors
+}
+
+type UpdatePasswordResponse {
+  errors: UpdatePasswordErrors
+}
+
+type ResetPasswordResponse {
+  token: JwtToken
+  errors: ResetPasswordErrors
+}
+
+type Query {
+  me : User!
+}
+
+type Mutation {
+  initiateUpdatePassword : InitiateUpdatePasswordResponse!
+  verifyUpdatePassword (input: VerifyUpdatePassword!) : UpdatePasswordResponse!
+  initiateResetPassword (input: InitiateResetPasswordInput!) : InitiateResetPasswordResponse!
+  verifyResetPassword (input: VerifyResetPassword!) : ResetPasswordResponse!
 }

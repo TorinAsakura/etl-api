@@ -5,11 +5,13 @@ import { CommandHandlers } from './commands/handlers'
 import { EventHandlers } from './events/handlers'
 import { Resolvers } from './resolvers'
 import { ModuleRef } from '@nestjs/core'
-import { Verification } from './entities'
+import { AuthenticatorSecret, Verification, VerificationData } from './entities'
 import { User } from '@er/users'
 import { Constraints } from './constraints'
+import { VerificationServiceFactory } from './service'
 
 export * from './entities'
+export * from './service'
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ export * from './entities'
     TypeOrmModule.forFeature([
       Verification,
       User,
+      VerificationData,
+      AuthenticatorSecret,
     ]),
   ],
   providers: [
@@ -24,6 +28,7 @@ export * from './entities'
     ...Constraints,
     ...CommandHandlers,
     ...EventHandlers,
+    VerificationServiceFactory,
   ],
 })
 export class VerifyModule implements OnModuleInit {

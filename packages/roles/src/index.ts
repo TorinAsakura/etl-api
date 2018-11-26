@@ -1,28 +1,29 @@
 import { OnModuleInit, Module } from '@nestjs/common'
 import { ModuleRef } from '@nestjs/core'
+import { TypeOrmModule } from '@nestjs/typeorm'
 import { CQRSModule, EventBus, CommandBus, GlobalPubSub } from '@er/cqrs'
 import { CommandHandlers } from './commands/handlers'
 import { Resolvers } from './resolvers'
 import { EventHandlers } from './events/handlers'
-import { User } from '@er/users'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { Constraints } from './constraints'
+import { Role, TradingRole } from './entities'
+
+export * from './entities'
 
 @Module({
   imports: [
     CQRSModule,
     TypeOrmModule.forFeature([
-      User,
+      TradingRole,
+      Role,
     ]),
   ],
   providers: [
     ...Resolvers,
-    ...Constraints,
     ...CommandHandlers,
     ...EventHandlers,
   ],
 })
-export class AccountModule implements OnModuleInit {
+export class RolesModule implements OnModuleInit {
   constructor(
     private readonly moduleRef: ModuleRef,
     private readonly commandBus: CommandBus,

@@ -1,21 +1,16 @@
 import { createTransport, Transporter } from 'nodemailer'
-import * as AWS from 'aws-sdk'
 
 export class Transport {
   private transport: Transporter
 
   constructor() {
     if (process.env.NODE_ENV === 'production') {
-      AWS.config.update({
-        region: process.env.SES_REGION,
-        accessKeyId: process.env.SES_KEY,
-        secretAccessKey: process.env.SES_SECRET,
-      })
-
       this.transport = createTransport({
-        SES: new AWS.SES({
-          apiVersion: '2010-12-01',
-        }),
+        service: 'yandex',
+        auth: {
+          user: 'etelaranta.net@yandex.ru',
+          pass: 'WRytzyedRk3RTRReFKtHiFoHUuqa3LygfuFLHfY4KiK4ntpfktCVvC',
+        },
       })
     } else {
       this.transport = createTransport({
