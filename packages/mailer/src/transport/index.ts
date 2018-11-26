@@ -1,17 +1,18 @@
 import { createTransport, Transporter } from 'nodemailer'
+import * as mg from 'nodemailer-mailgun-transport'
 
 export class Transport {
   private transport: Transporter
 
   constructor() {
     if (process.env.NODE_ENV === 'production') {
-      this.transport = createTransport({
-        service: 'yandex',
+      const auth = {
         auth: {
-          user: 'etelaranta.net@yandex.ru',
-          pass: 'WRytzyedRk3RTRReFKtHiFoHUuqa3LygfuFLHfY4KiK4ntpfktCVvC',
+          api_key: 'key-9d9609e9571e1dffdb4901be18758a6c',
+          domain: 'etelaranta.net',
         },
-      })
+      }
+      this.transport = createTransport(mg(auth))
     } else {
       this.transport = createTransport({
         host: 'mailhog',
