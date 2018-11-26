@@ -12,12 +12,23 @@ export class EmailVerificationService extends BaseVerificationService {
 
   async initiate(params: VerificationParams): Promise<VerificationData> {
     const verificationData = await super.initiate(params)
-
     const client = createClient()
-    client.send('verification-code', params.consumer, 'en', {
-      verificationId: verificationData.verificationId,
-      verificationCode: verificationData.code,
-    })
+    if (verificationData.payload === 'register') {
+      client.send('verification-code-registration', params.consumer, 'en', {
+        verificationId: verificationData.verificationId,
+        verificationCode: verificationData.code,
+      })
+    } else if (verificationData.payload === 'change_password') {
+      client.send('verification-code-change-password', params.consumer, 'en', {
+        verificationId: verificationData.verificationId,
+        verificationCode: verificationData.code,
+      })
+    } else {
+      client.send('verification-code', params.consumer, 'en', {
+        verificationId: verificationData.verificationId,
+        verificationCode: verificationData.code,
+      })
+    }
     return verificationData
   }
 

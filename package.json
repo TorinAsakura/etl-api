@@ -5,7 +5,7 @@
     "typecheck": "lerna run typecheck",
     "lint": "lerna run lint",
     "locales:extract": "lerna run locales:extract",
-    "locales:upload": "intl-tools lokalise:upload --project=148972675bec6bc92e74d6.85001852 --messages=./packages/**/locales/messages.json",
+    "locales:upload": "intl-tools lokalise:upload --project=148972675bec6bc92e74d6.85001852 -t 3f363c9d46ecd728beacbaf47f6eb61eb6c33647 --messages=./packages/**/locales/messages.json",
     "postinstall": "lerna run locales:download"
   },
   "devDependencies": {

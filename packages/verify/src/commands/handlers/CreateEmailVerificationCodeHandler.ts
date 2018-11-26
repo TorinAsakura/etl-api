@@ -25,6 +25,7 @@ export class CreateEmailVerificationCodeHandler implements ICommandHandler<Creat
     const verificationService = this.verificationServiceFactory.create(VerificationMethod.Email)
     const verificationParams: VerificationParams = {
       consumer: user.email,
+      payload: 'register',
     }
     const verification = await verificationService.initiate(verificationParams)
 
