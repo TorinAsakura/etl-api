@@ -11,7 +11,7 @@ lerna bootstrap
 ```
 ## Run Gateway
 ```
-lerna run dev
+lerna --@etl/swt-gateway run dev --stream
 ```
 # Sith Path
 
