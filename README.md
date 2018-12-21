@@ -9,10 +9,9 @@ After installing all entities run dependencies installation
 ```
 lerna bootstrap
 ```
-## Switch to Gateway
+## Run Gateway
 ```
-cd packages/swt-gateway
-yarn run dev
+lerna run dev
 ```
 # Sith Path
 
