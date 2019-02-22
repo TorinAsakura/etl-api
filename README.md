@@ -11,7 +11,7 @@ lerna bootstrap
 ```
 ## Run Gateway
 ```
-yarn run @etl/swt-gateway
+yarn run dev @etl/swt-gateway
 ```
 # Sith Path
 
